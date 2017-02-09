@@ -12,18 +12,32 @@ Player::Player(std::string Name, int Money, Card Card1, Card Card2)
 	card2 = Card2;
 }
 
-
-Player::~Player()
+Player::Player()
 {
+	money = 1000;
+	name = "unnamed";
+	card1 = Card();
+	card2 = Card();
+}
+
+void Player::changeName()
+{
+	std::cin >> name;
 }
 
 
-int& Player::get_money()
+Player::~Player()
+{
+	
+}
+
+
+const int& Player::getMoney()
 {
 	return money;
 }
 
-std::string& Player::get_name()
+const std::string& Player::getName()
 {
 	return name;
 }

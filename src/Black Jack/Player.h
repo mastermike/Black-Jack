@@ -11,8 +11,11 @@ private:
 	Card card2;
 public:
 	Player(std::string, int, Card, Card);
+	Player();
 	~Player();
-	int& get_money();
-	std::string& get_name();
+	const int& getMoney();
+	const std::string& getName();
+	void changeName();
+
 
 };
