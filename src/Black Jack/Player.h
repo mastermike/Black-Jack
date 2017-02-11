@@ -1,21 +1,28 @@
 #pragma once
 #include "Card.h"
+#include "Deck.h"
 #include <string>
+#include <list>
 
 class Player
 {
 private:
-	int money;
-	std::string name;
-	Card card1;
-	Card card2;
+	int money; //player's current amount of money for betting
+	std::string name; //player's name
+	std::list<Card> hand; //list of player's hand
+	int bet = 0;
+	int points = 0;
 public:
-	Player(std::string, int, Card, Card);
+	Player(std::string, int);
 	Player();
 	~Player();
 	const int& getMoney();
 	const std::string& getName();
-	void changeName();
-
-
+	void changeName(); //changes player's name using cin
+	void drawCard(Deck&); //"draws" a card from the "deck"
+	void showCards(); //displays the player's current hand
+	void placeBet();
+	int getBet();
+	void updatePoints();
+	
 };

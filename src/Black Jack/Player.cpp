@@ -1,23 +1,24 @@
 #include "Player.h"
+#include "Deck.h"
 #include <iostream>
 #include <string>
 
-
-
-Player::Player(std::string Name, int Money, Card Card1, Card Card2)
+Player::Player(std::string Face, int Money)
 {
 	money = Money;
-	name = Name;
-	card1 = Card1;
-	card2 = Card2;
+	name = Face;
 }
 
-Player::Player()
+void Player::drawCard(Deck& deck)
 {
-	money = 1000;
-	name = "unnamed";
-	card1 = Card();
-	card2 = Card();
+	hand.push_back(deck.getCard());
+	deck.removeCard();
+}
+
+Player::Player() //default constructor initiates name and money to default values
+{
+	money = 10000;
+	std:: cin >> name;
 }
 
 void Player::changeName()
@@ -25,12 +26,9 @@ void Player::changeName()
 	std::cin >> name;
 }
 
-
 Player::~Player()
 {
-	
 }
-
 
 const int& Player::getMoney()
 {
@@ -40,4 +38,31 @@ const int& Player::getMoney()
 const std::string& Player::getName()
 {
 	return name;
+}
+
+void Player::updatePoints()
+{
+	for (std::list<Card>::iterator i = hand.begin(); i != hand.end(); i++)
+	{
+		points += i->getfaceVal();
+	}
+}
+
+void Player::showCards()
+{
+	for (std::list<Card>::iterator i = hand.begin(); i != hand.end(); i++)
+	{
+		i->display();
+	}
+}
+
+void Player::placeBet()
+{
+	std::cin >> bet;
+	money -= bet;
+}
+
+int Player::getBet()
+{
+	return bet;	
 }
