@@ -4,21 +4,21 @@
 #include <string>
 
 
-Card::Card(std::string Suite, std::string Face, int faceval)
+Card::Card(std::string Suite, std::string Face, int faceval, bool isface)
 {
 	suite = Suite;
 	face = Face;
 	faceVal = faceval;
-
+	isFace = isface;
 }
+
 
 Card::Card()
 {
 	suite = "none";
 	face = "none";
 	faceVal = 0;
-
-	
+	isFace = false;
 }
 
 void Card::changeVal(int value)
@@ -28,7 +28,7 @@ void Card::changeVal(int value)
 
 void Card::display()
 {
-	std::cout << face << " of " << suite << std::endl;
+	std::cout << '\t' << face << " of " << suite << std::endl;
 }
 
 Card::~Card()
@@ -45,3 +45,7 @@ std::string Card::getFace()
 	return face;
 }
 
+bool Card::isaFace()
+{
+	return isFace;
+}

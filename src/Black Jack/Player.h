@@ -12,6 +12,7 @@ private:
 	std::list<Card> hand; //list of player's hand
 	int bet = 0;
 	int points = 0;
+	int decision;
 public:
 	Player(std::string, int);
 	Player();
@@ -24,5 +25,11 @@ public:
 	void placeBet();
 	int getBet();
 	void updatePoints();
+	void recieveMoney(int);
+	int getPoints();
+	std::list<Card>& getHand();
+
+
+
 	
 };

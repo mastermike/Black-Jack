@@ -13,13 +13,20 @@ private:
 public:
 	Dealer();
 	~Dealer();
-	const Deck& getDeck();
+	Deck& getDeck();
 	void updatePot(Player&);
 	void resetPot();
-	void drawCard(Deck&); //"draws" a card from the "deck"
+	void drawCard(); //"draws" a card from the "deck"
 	void showCards(); //displays the player's current hand
 	void showCard();
 	void updatePoints();
 	int getPoints();
 	void deal(Player&);
+	void showPoints();
+	std::list<Card>& getHand();
+	void playerWin(Player&);
+	void dealerWin(Player&);
+	void unDeal(Player&);
+	int getPot();
+	
 };

@@ -13,6 +13,9 @@ public:
 	void showDeck();
 	void shuffleDeck();
 	Card getCard();
-	void removeCard();
+	void pop_back();
+	void push_back(Card);
+	void blackjackrules();
+	
 };
 
