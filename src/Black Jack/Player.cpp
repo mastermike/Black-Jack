@@ -67,12 +67,28 @@ void Player::showCards()
 void Player::placeBet()
 {
 	std::cin >> bet;
-	while (bet <= 0)
+	if (std::cin.fail())
 	{
-		std::cout << "Error; Cannot enter a non-zero number.\nPlease enter your bet: ";
-		std::cin >> bet;
+		std::cin.clear();
+		std::cin.ignore();
+		std::cout << "That's not an integer. Please enter an integer only bet:\n";
+
+
+
+		placeBet();
 	}
-	money -= bet;
+	else
+	{
+		if ((bet <= 0) || (bet > money))
+		{
+			std::cout << "Error; Unable to process your bet.\nPlease enter your bet: ";
+			placeBet();
+		}
+		else
+			money = money - bet;
+			
+	}
+	
 }
 
 int Player::getBet()

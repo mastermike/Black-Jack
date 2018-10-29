@@ -13,6 +13,7 @@ Game::Game()
 {
 	Player player;
 	Dealer dealer;
+	dealer.getDeck().blackjackrules();
 	this->start(player, dealer);
 	
 }
@@ -164,12 +165,12 @@ void Game::evaluate(Player& player, Dealer& dealer)
 {
 	for (std::list<Card>::iterator i = player.getHand().begin(); i != player.getHand().end(); i++)
 	{
-		if ((i->isaFace() == true) && (i->getFace() != std::string("Ace")))
+		if ((i->isaFace() == true) && (i->getFace() != std::string("A")))
 		{
 			i->changeVal(10);
 		}
 
-		if (i->getFace() == std::string("Ace"))
+		if (i->getFace() == std::string("A"))
 		{
 			i->changeVal(11);
 		}
@@ -178,7 +179,7 @@ void Game::evaluate(Player& player, Dealer& dealer)
 	player.updatePoints();
 	for (std::list<Card>::iterator i = player.getHand().begin(); i != player.getHand().end(); i++)
 	{
-		if ((i->getFace() == std::string("Ace")) && (player.getPoints() > 21))
+		if ((i->getFace() == std::string("A")) && (player.getPoints() > 21))
 		{
 			i->changeVal(1);
 			player.updatePoints();
@@ -189,12 +190,12 @@ void Game::evaluate(Player& player, Dealer& dealer)
 
 	for (std::list<Card>::iterator i = dealer.getHand().begin(); i != dealer.getHand().end(); i++)
 	{
-		if ((i->isaFace() == true) && (i->getFace() != std::string("Ace")))
+		if ((i->isaFace() == true) && (i->getFace() != std::string("A")))
 		{
 			i->changeVal(10);
 		}
 
-		if (i->getFace() == std::string("Ace"))
+		if (i->getFace() == std::string("A"))
 		{
 			i->changeVal(11);
 		}
@@ -204,7 +205,7 @@ void Game::evaluate(Player& player, Dealer& dealer)
 	dealer.updatePoints();
 	for (std::list<Card>::iterator i = dealer.getHand().begin(); i != dealer.getHand().end(); i++)
 	{
-		if ((i->getFace() == std::string("Ace")) && (dealer.getPoints() > 21))
+		if ((i->getFace() == std::string("A")) && (dealer.getPoints() > 21))
 		{
 			i->changeVal(1);
 			dealer.updatePoints();
@@ -227,14 +228,13 @@ void Game::reset(Player& player, Dealer& dealer)
 
 	if (player.getMoney() <= 0)
 	{
-		std::cout << "You are out of money.\nGame over.";
+		std::cout << "You are out of money.\nGame over.\n";
 		this->~Game();
+		Game game;
 	}
 	dealer.unDeal(player);
 	std::cout << "Re-dealing Cards...\n";
 	std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 	bet(player, dealer);
-	//this->~Game();
-	//Game(player, dealer);
 
 }

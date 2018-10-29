@@ -16,6 +16,6 @@ public:
 	void pop_back();
 	void push_back(Card);
 	void blackjackrules();
-	
+	void size();
 };
 

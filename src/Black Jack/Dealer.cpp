@@ -63,7 +63,7 @@ void Dealer::resetPot()
 }
 void Dealer::updatePot(Player& player)
 {
-	pot += (player.getBet());
+	pot += player.getBet();
 }
 
 
