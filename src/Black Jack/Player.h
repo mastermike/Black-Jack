@@ -4,8 +4,7 @@
 #include <string>
 #include <list>
 
-class Player
-{
+class Player{
 private:
 	int money; //player's current amount of money for betting
 	std::string name; //player's name

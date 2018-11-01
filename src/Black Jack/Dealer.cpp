@@ -3,52 +3,42 @@
 #include "Player.h"
 #include <iostream>
 
-Dealer::Dealer()
-{
+Dealer::Dealer(){
 
 }
-Dealer::~Dealer()
-{
+Dealer::~Dealer(){
 
 }
-void Dealer::deal(Player& player)
-{
+void Dealer::deal(Player& player){
 	deck.shuffleDeck();
 	player.drawCard(deck);
 	this->drawCard();
 	player.drawCard(deck);
 }
-void Dealer::showPoints()
-{
+void Dealer::showPoints(){
 	std::cout << points << std::endl;
 }
-Deck& Dealer::getDeck()
-{
+Deck& Dealer::getDeck(){
 	return deck;
 }
-void Dealer::drawCard()
-{
+void Dealer::drawCard(){
 	hand.push_back(deck.getCard());
 	deck.pop_back();
 }
-void Dealer::showCard()
-{
+void Dealer::showCard(){
 	hand.begin()->display();
 }
-void Dealer::updatePoints()
-{
+void Dealer::updatePoints(){
 	points = 0;
 	for (std::list<Card>::iterator i = hand.begin(); i != hand.end(); i++)
 	{
 		points += i->getfaceVal();
 	}
 }
-int Dealer::getPoints()
-{
+int Dealer::getPoints(){
 	return points;
 }
-void Dealer::showCards()
-{
+void Dealer::showCards(){
 	updatePoints();
 	std::cout << "The Dealer has " << points << " points.\n";
 	for (std::list<Card>::iterator i = hand.begin(); i != hand.end(); i++)
@@ -57,30 +47,25 @@ void Dealer::showCards()
 	}
 
 }
-void Dealer::resetPot()
-{
+void Dealer::resetPot(){
 	pot = 0;
 }
-void Dealer::updatePot(Player& player)
-{
+void Dealer::updatePot(Player& player){
 	pot += player.getBet();
 }
 
 
-std::list<Card>& Dealer::getHand()
-{
+std::list<Card>& Dealer::getHand(){
 	return hand;
 }
 
-void Dealer::playerWin(Player& player)
-{
+void Dealer::playerWin(Player& player){
 	player.recieveMoney(pot);
 	std::cout << "You won.\n";
 	pot = 0;
 }
 
-void Dealer::dealerWin(Player& player)
-{
+void Dealer::dealerWin(Player& player){
 	std::cout << "Dealer won...\n";
 	
 	pot = 0;
@@ -88,18 +73,15 @@ void Dealer::dealerWin(Player& player)
 
 
 
-void Dealer::unDeal(Player& player)
-{
+void Dealer::unDeal(Player& player){
 
-	while (hand.empty() == false)
-	{
+	while (hand.empty() == false){
 		std::list<Card>::iterator i = hand.begin();
 		deck.push_back(*i);
 		hand.pop_front();
 	}
 
-	while (player.getHand().empty() == false)
-	{
+	while (player.getHand().empty() == false){
 		std::list<Card>::iterator j = player.getHand().begin();
 		deck.push_back(*j);
 		player.getHand().pop_front();
@@ -107,7 +89,6 @@ void Dealer::unDeal(Player& player)
 	}
 }
 
-int Dealer::getPot()
-{
+int Dealer::getPot(){
 	return pot;
 }

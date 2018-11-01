@@ -6,10 +6,7 @@
 #include <chrono>
 #include <vector>
 
-Deck::Deck()
-{
-	for (int i = 0; i != 1; i++)
-	{
+Deck::Deck(){
 	
 			deck.push_back(Card("Hearts", "2", 2, false));
 			deck.push_back(Card("Hearts", "3", 3, false));
@@ -63,15 +60,12 @@ Deck::Deck()
 			deck.push_back(Card("Clubs", "Q", 12, true));
 			deck.push_back(Card("Clubs", "K", 13, true));
 			deck.push_back(Card("Clubs", "A", 14, true));
-		
-	}
+
 }
 
 
-void Deck::blackjackrules()
-{
-	for (std::vector<Card>::iterator i = deck.begin(); i != deck.end(); i++)
-	{
+void Deck::blackjackrules(){
+	for (std::vector<Card>::iterator i = deck.begin(); i != deck.end(); i++){
 		if (i->getfaceVal() > 10 && i->getFace() != "A")
 			i->changeVal(10);
 		if (i->getFace() == "A")
@@ -79,40 +73,34 @@ void Deck::blackjackrules()
 	}
 }
 
-Card Deck::getCard()
-{
+Card Deck::getCard(){
 	return deck.back();
 }
 
-void Deck::pop_back()
-{
+void Deck::pop_back(){
 	deck.pop_back();
 }
 
 
 
 
-void Deck::showDeck()
-{
+void Deck::showDeck(){
 	for (std::vector<Card>::iterator i = deck.begin(); i != deck.end(); i++)
 	{
 		i->display();
 	}
 }
 
-void Deck::shuffleDeck()
-{
+void Deck::shuffleDeck(){
 	std::random_device rd;
 	std::mt19937 g(rd());
 	std::shuffle(deck.begin(), deck.end(), g);
 }
 
-Deck::~Deck()
-{
+Deck::~Deck(){
 }
 
-void Deck::push_back(Card card)
-{
+void Deck::push_back(Card card){
 	deck.push_back(card);
 }
 

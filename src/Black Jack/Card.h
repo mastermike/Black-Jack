@@ -1,8 +1,7 @@
 #pragma once
 #include <list>
 #include <string>
-class Card
-{
+class Card{
 private:
 	std::string suite; //contains the face of suite (eg. hearts, spades, etc.)
 	std::string face; //contains the face value of the card (eg. '10', king, etc.)

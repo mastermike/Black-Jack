@@ -4,45 +4,37 @@
 #include "Dealer.h"
 #include <string>
 
-Player::Player(std::string Face, int Money)
-{
+Player::Player(std::string Face, int Money){
 	money = Money;
 	name = Face;
 }
 
-void Player::drawCard(Deck& deck)
-{
+void Player::drawCard(Deck& deck){
 	hand.push_back(deck.getCard());
 	deck.pop_back();
 }
 
-Player::Player() //default constructor initiates name and money to default values
-{
+Player::Player(){ //default constructor initiates name and money to default values
 	money = 10000;
 	name = "None";
 }
 
-void Player::changeName()
-{
+void Player::changeName(){
 	std::cin >> name;
 }
 
-Player::~Player()
-{
+Player::~Player(){
 }
 
-const int& Player::getMoney()
-{
+const int& Player::getMoney(){
 	return money;
 }
 
-const std::string& Player::getName()
-{
+const std::string& Player::getName(){
 	return name;
 }
 
-void Player::updatePoints()
-{
+void Player::updatePoints(){
 	points = 0;
 	for (std::list<Card>::iterator i = hand.begin(); i != hand.end(); i++)
 	{
@@ -53,8 +45,7 @@ void Player::updatePoints()
 
 
 
-void Player::showCards()
-{
+void Player::showCards(){
 	updatePoints();
 	std::cout << "You have: " << points << " points.\n";
 	for (std::list<Card>::iterator i = hand.begin(); i != hand.end(); i++)
@@ -64,21 +55,15 @@ void Player::showCards()
 
 }
 
-void Player::placeBet()
-{
+void Player::placeBet(){
 	std::cin >> bet;
-	if (std::cin.fail())
-	{
+	if (std::cin.fail()){
 		std::cin.clear();
 		std::cin.ignore();
 		std::cout << "That's not an integer. Please enter an integer only bet:\n";
-
-
-
 		placeBet();
 	}
-	else
-	{
+	else{
 		if ((bet <= 0) || (bet > money))
 		{
 			std::cout << "Error; Unable to process your bet.\nPlease enter your bet: ";
@@ -86,29 +71,24 @@ void Player::placeBet()
 		}
 		else
 			money = money - bet;
-			
 	}
 	
 }
 
-int Player::getBet()
-{
+int Player::getBet(){
 	return bet;	
 }
 
-void Player::recieveMoney(int i)
-{
+void Player::recieveMoney(int i){
 	money += 2*i;
 }
 
 
-int Player::getPoints()
-{
+int Player::getPoints(){
 	return points;
 }
 
-std::list<Card>& Player::getHand()
-{
+std::list<Card>& Player::getHand(){
 	return hand;
 }
 

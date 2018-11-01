@@ -3,8 +3,7 @@
 #include "Player.h"
 
 
-class Dealer
-{
+class Dealer{
 private:
 	int pot = 0;
 	Deck deck;
