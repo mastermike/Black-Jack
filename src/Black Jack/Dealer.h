@@ -16,7 +16,7 @@ public:
 	void updatePot(Player&);
 	void resetPot();
 	void drawCard(); //"draws" a card from the "deck"
-	void showCards(); //displays the player's current hand
+	void showCards(bool hideHoleCard = false); //displays the dealer's current hand
 	void showCard();
 	void updatePoints();
 	int getPoints();

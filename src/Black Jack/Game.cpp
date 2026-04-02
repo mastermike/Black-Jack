@@ -6,6 +6,7 @@
 #include <iostream>
 #include <chrono>
 #include <thread>
+#include <limits>
 
 
 
@@ -23,12 +24,13 @@ Game::Game(Player& mPlayer1, Dealer& mDealer1) {
 Game::~Game(){
 }
 
-
 void Game::start(){
 	std::cout << "Welcome to BlackJack!\n";
-	this->bet();
+	while (mPlayer.getMoney() > 0){
+		this->bet();
+	}
+	std::cout << "You are out of money.\nGame over.\n";
 }
-
 
 void Game::bet(){
 	std::cout << "You have $" << mPlayer.getMoney() << "\nPlease place your bet: ";
@@ -43,44 +45,60 @@ void Game::deal(){
 	mDealer.deal(mPlayer);
 	this->evaluate();
 	mPlayer.showCards();
-	mDealer.showCards();
+	mDealer.showCards(true);
 	mDealer.updatePoints();
 	mPlayer.updatePoints();
 	decision();
 }
 
-
 void Game::decision(){
 
-	if (mPlayer.getPoints() == 21)
+	if (mPlayer.getHand().size() == 2 && mPlayer.getPoints() == 21)
 	{
 		std::cout << "BlackJack!\n";
 		std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 		stand();
+		return;
 	}
 
-	int decide;
-	std::cout << "Press '1' to hit or press '2' to stand.\n";
-	std::cin >> decide;
-	if (decide == 1)
+	while (true)
 	{
-		mPlayer.drawCard(mDealer.getDeck());
-		evaluate();
-		mPlayer.updatePoints();
-		mPlayer.showCards();
-
-		if (mPlayer.getPoints() > 21)
+		int decide;
+		std::cout << "Press '1' to hit or press '2' to stand.\n";
+		std::cin >> decide;
+		if (std::cin.fail())
 		{
-			mDealer.dealerWin(mPlayer);
-			std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-			reset();
+			std::cin.clear();
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			std::cout << "Invalid selection.\n";
+			continue;
 		}
-		decision();
-	}
 
-	if (decide == 2)
-	{
-		stand();
+		if (decide == 1)
+		{
+			mPlayer.drawCard(mDealer.getDeck());
+			evaluate();
+			mPlayer.updatePoints();
+			mPlayer.showCards();
+
+			if (mPlayer.getPoints() > 21)
+			{
+				mDealer.dealerWin(mPlayer);
+				std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+				reset();
+				return;
+			}
+
+			continue;
+		}
+
+		if (decide == 2)
+		{
+			stand();
+			return;
+		}
+
+		std::cout << "Invalid selection.\n";
 	}
 	
 }
@@ -89,9 +107,10 @@ void Game::decision(){
 void Game::stand(){
 	//std::cout << "\033[2J\033[1;1H";
 
-	std::cout << "The mDealer is drawing cards...\n";
+	std::cout << "The Dealer is drawing cards...\n";
 	std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 	mDealer.updatePoints();
+	mDealer.showCards();
 
 	while (mDealer.getPoints() < 17)
 	{
@@ -111,18 +130,21 @@ void Game::whoWon(){
 		mDealer.playerWin(mPlayer);
 		std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 		reset();
+		return;
 	}
 
 	if ((mPlayer.getPoints() > 21) && (mDealer.getPoints() <= 21)){
 		mDealer.dealerWin(mPlayer);
 		std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 		reset();
+		return;
 	}
 
 	if ((mDealer.getPoints() <= 21) && (mDealer.getPoints() > mPlayer.getPoints())){
 		mDealer.dealerWin(mPlayer);
 		std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 		reset();
+		return;
 	}
 
 	if ((mPlayer.getPoints() <= 21) && (mDealer.getPoints() > 21)){
@@ -130,6 +152,7 @@ void Game::whoWon(){
 		mDealer.playerWin(mPlayer);
 		std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 		reset();
+		return;
 	}
 
 	if (mPlayer.getPoints() == mDealer.getPoints()){
@@ -137,6 +160,7 @@ void Game::whoWon(){
 		mPlayer.recieveMoney(mDealer.getPot() / 2);
 		std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 		reset();
+		return;
 	}
 
 	if ((mPlayer.getPoints() <= 21) && (mDealer.getPoints() < mPlayer.getPoints())){
@@ -144,6 +168,7 @@ void Game::whoWon(){
 		mDealer.playerWin(mPlayer);
 		std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 		reset();
+		return;
 	}
 
 
@@ -194,15 +219,11 @@ void Game::evaluate(){
 
 
 void Game::reset(){
-
-	if (mPlayer.getMoney() <= 0){
-		std::cout << "You are out of money.\nGame over.\n";
-		this->~Game();
-		Game game;
-	}
 	mDealer.unDeal(mPlayer);
-	std::cout << "Re-dealing Cards...\n";
-	std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-	bet();
+	mDealer.resetPot();
+	if (mPlayer.getMoney() > 0){
+		std::cout << "Re-dealing Cards...\n";
+		std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+	}
 
 }

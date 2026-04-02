@@ -3,6 +3,7 @@
 #include <iostream>
 #include "Dealer.h"
 #include <string>
+#include <limits>
 
 Player::Player(std::string Face, int Money){
 	money = Money;
@@ -56,23 +57,24 @@ void Player::showCards(){
 }
 
 void Player::placeBet(){
-	std::cin >> bet;
-	if (std::cin.fail()){
-		std::cin.clear();
-		std::cin.ignore();
-		std::cout << "That's not an integer. Please enter an integer only bet:\n";
-		placeBet();
-	}
-	else{
+	while (true){
+		std::cin >> bet;
+		if (std::cin.fail()){
+			std::cin.clear();
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			std::cout << "That's not an integer. Please enter an integer only bet:\n";
+			continue;
+		}
+
 		if ((bet <= 0) || (bet > money))
 		{
 			std::cout << "Error; Unable to process your bet.\nPlease enter your bet: ";
-			placeBet();
+			continue;
 		}
-		else
-			money = money - bet;
+
+		money = money - bet;
+		return;
 	}
-	
 }
 
 int Player::getBet(){

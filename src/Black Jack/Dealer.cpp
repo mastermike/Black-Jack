@@ -14,6 +14,7 @@ void Dealer::deal(Player& player){
 	player.drawCard(deck);
 	this->drawCard();
 	player.drawCard(deck);
+	this->drawCard();
 }
 void Dealer::showPoints(){
 	std::cout << points << std::endl;
@@ -38,14 +39,24 @@ void Dealer::updatePoints(){
 int Dealer::getPoints(){
 	return points;
 }
-void Dealer::showCards(){
+void Dealer::showCards(bool hideHoleCard){
+	if (hideHoleCard && hand.empty() == false)
+	{
+		std::cout << "The Dealer shows:\n";
+		hand.begin()->display();
+		if (hand.size() > 1)
+		{
+			std::cout << "\t[Hidden card]\n";
+		}
+		return;
+	}
+
 	updatePoints();
 	std::cout << "The Dealer has " << points << " points.\n";
 	for (std::list<Card>::iterator i = hand.begin(); i != hand.end(); i++)
 	{
 		i->display();
 	}
-
 }
 void Dealer::resetPot(){
 	pot = 0;
@@ -61,12 +72,12 @@ std::list<Card>& Dealer::getHand(){
 
 void Dealer::playerWin(Player& player){
 	player.recieveMoney(pot);
-	std::cout << "You won.\n";
+	std::cout << "You won." << " You now have $" << player.getMoney() << "\n";
 	pot = 0;
 }
 
 void Dealer::dealerWin(Player& player){
-	std::cout << "Dealer won...\n";
+	std::cout << "Dealer won..." << " You now have $" << player.getMoney() << "\n";
 	
 	pot = 0;
 }
