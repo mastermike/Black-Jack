@@ -12,7 +12,7 @@ public:
 	Card();
 	~Card();
 	void changeVal(int);
-	void display();
+	void display() const;
 	int getfaceVal() const;
 	std::string getFace() const;
 	bool isaFace() const;

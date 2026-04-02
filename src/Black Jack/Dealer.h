@@ -12,9 +12,7 @@ public:
 	~Dealer();
 	void showCards(bool hideHoleCard = false); //displays the dealer's current hand
 	void showCard();
-	void updatePoints();
-	void deal(Player&);
-	std::list<Card>& getHand();
-	int getPot();
-	
+	void receiveCard(const Card& card);
+	static bool shouldHit() const;
+		
 };

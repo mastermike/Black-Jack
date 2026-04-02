@@ -26,7 +26,7 @@ void Card::changeVal(int value)
 	faceVal = value;
 }
 
-void Card::display()
+void Card::display() const
 {
 	std::cout << '\t' << face << " of " << suite << std::endl;
 }

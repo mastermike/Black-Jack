@@ -1,8 +1,5 @@
 #include "Player.h"
-#include "Deck.h"
 #include <iostream>
-#include "Dealer.h"
-#include <string>
 #include <limits>
 
 Player::Player(std::string Face, int Money){
@@ -11,7 +8,11 @@ Player::Player(std::string Face, int Money){
 }
 
 void Player::drawCard(Deck& deck){
-	hand.push_back(deck.drawCard());
+	receiveCard(deck.drawCard());
+}
+
+void Player::receiveCard(const Card& card){
+	hand.addCard(card);
 }
 
 Player::Player(){ //default constructor initiates name and money to default values
@@ -34,25 +35,12 @@ const std::string& Player::getName(){
 	return name;
 }
 
-void Player::updatePoints(){
-	points = 0;
-	for (std::list<Card>::iterator i = hand.begin(); i != hand.end(); i++)
-	{
-		points += i->getfaceVal();
-	}
-}
-
-
-
-
 void Player::showCards(){
-	updatePoints();
-	std::cout << "You have: " << points << " points.\n";
-	for (std::list<Card>::iterator i = hand.begin(); i != hand.end(); i++)
+	std::cout << "You have: " << hand.getPoints() << " points.\n";
+	for (const auto& card : hand.getCards())
 	{
-		i->display();
+		card.display();
 	}
-
 }
 
 void Player::placeBet(){
@@ -86,10 +74,14 @@ void Player::recieveMoney(int i){
 
 
 int Player::getPoints(){
-	return points;
+	return hand.getPoints();
 }
 
-std::list<Card>& Player::getHand(){
+const Hand& Player::getHand() const{
+	return hand;
+}
+
+Hand& Player::getHand(){
 	return hand;
 }
 
