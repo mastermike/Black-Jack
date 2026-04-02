@@ -13,9 +13,9 @@ public:
 	~Card();
 	void changeVal(int);
 	void display();
-	int getfaceVal();
-	std::string getFace();
-	bool isaFace();
+	int getfaceVal() const;
+	std::string getFace() const;
+	bool isaFace() const;
 	
 };
 

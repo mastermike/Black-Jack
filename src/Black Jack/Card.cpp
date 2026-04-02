@@ -35,17 +35,17 @@ Card::~Card()
 {
 }
 
-int Card::getfaceVal()
+int Card::getfaceVal() const
 {
 	return faceVal;
 }
 
-std::string Card::getFace()
+std::string Card::getFace() const
 {
 	return face;
 }
 
-bool Card::isaFace()
+bool Card::isaFace() const
 {
 	return isFace;
 }

@@ -11,8 +11,7 @@ Player::Player(std::string Face, int Money){
 }
 
 void Player::drawCard(Deck& deck){
-	hand.push_back(deck.getCard());
-	deck.pop_back();
+	hand.push_back(deck.drawCard());
 }
 
 Player::Player(){ //default constructor initiates name and money to default values

@@ -11,8 +11,6 @@
 
 
 Game::Game(){
-	mDealer.getDeck().blackjackrules();
-
 }
 
 Game::Game(Player& mPlayer1, Dealer& mDealer1) {

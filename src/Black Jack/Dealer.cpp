@@ -23,8 +23,7 @@ Deck& Dealer::getDeck(){
 	return deck;
 }
 void Dealer::drawCard(){
-	hand.push_back(deck.getCard());
-	deck.pop_back();
+	hand.push_back(deck.drawCard());
 }
 void Dealer::showCard(){
 	hand.begin()->display();

@@ -1,88 +1,28 @@
-﻿#include "Deck.h"
+#include "Deck.h"
 #include <algorithm>
-#include <random>
-#include <iterator>
+#include <array>
 #include <iostream>
-#include <chrono>
-#include <vector>
+#include <random>
 
 Deck::Deck(){
-	
-			deck.push_back(Card("Hearts", "2", 2, false));
-			deck.push_back(Card("Hearts", "3", 3, false));
-			deck.push_back(Card("Hearts", "4", 4, false));
-			deck.push_back(Card("Hearts", "5", 5, false));
-			deck.push_back(Card("Hearts", "6", 6, false));
-			deck.push_back(Card("Hearts", "7", 7, false));
-			deck.push_back(Card("Hearts", "8", 8, false));
-			deck.push_back(Card("Hearts", "9", 9, false));
-			deck.push_back(Card("Hearts", "10", 10, false));
-			deck.push_back(Card("Hearts", "J", 11, true));
-			deck.push_back(Card("Hearts", "Q", 12, true));
-			deck.push_back(Card("Hearts", "K", 13, true));
-			deck.push_back(Card("Hearts", "A", 14, true));
-			deck.push_back(Card("Diamonds", "2", 2, false));
-			deck.push_back(Card("Diamonds", "3", 3, false));
-			deck.push_back(Card("Diamonds", "4", 4, false));
-			deck.push_back(Card("Diamonds", "5", 5, false));
-			deck.push_back(Card("Diamonds", "6", 6, false));
-			deck.push_back(Card("Diamonds", "7", 7, false));
-			deck.push_back(Card("Diamonds", "8", 8, false));
-			deck.push_back(Card("Diamonds", "9", 9, false));
-			deck.push_back(Card("Diamonds", "10", 10, false));
-			deck.push_back(Card("Diamonds", "J", 11, true));
-			deck.push_back(Card("Diamonds", "Q", 12, true));
-			deck.push_back(Card("Diamonds", "K", 13, true));
-			deck.push_back(Card("Diamonds", "A", 14, true));
-			deck.push_back(Card("Spades", "2", 2, false));
-			deck.push_back(Card("Spades", "3", 3, false));
-			deck.push_back(Card("Spades", "4", 4, false));
-			deck.push_back(Card("Spades", "5", 5, false));
-			deck.push_back(Card("Spades", "6", 6, false));
-			deck.push_back(Card("Spades", "7", 7, false));
-			deck.push_back(Card("Spades", "8", 8, false));
-			deck.push_back(Card("Spades", "9", 9, false));
-			deck.push_back(Card("Spades", "10", 10, false));
-			deck.push_back(Card("Spades", "J", 11, true));
-			deck.push_back(Card("Spades", "Q", 12, true));
-			deck.push_back(Card("Spades", "K", 13, true));
-			deck.push_back(Card("Spades", "A", 14, true));
-			deck.push_back(Card("Clubs", "2", 2, false));
-			deck.push_back(Card("Clubs", "3", 3, false));
-			deck.push_back(Card("Clubs", "4", 4, false));
-			deck.push_back(Card("Clubs", "5", 5, false));
-			deck.push_back(Card("Clubs", "6", 6, false));
-			deck.push_back(Card("Clubs", "7", 7, false));
-			deck.push_back(Card("Clubs", "8", 8, false));
-			deck.push_back(Card("Clubs", "9", 9, false));
-			deck.push_back(Card("Clubs", "10", 10, false));
-			deck.push_back(Card("Clubs", "J", 11, true));
-			deck.push_back(Card("Clubs", "Q", 12, true));
-			deck.push_back(Card("Clubs", "K", 13, true));
-			deck.push_back(Card("Clubs", "A", 14, true));
+	static const std::array<std::string, 4> suits = { "Hearts", "Diamonds", "Spades", "Clubs" };
+	static const std::array<std::string, 13> faces = { "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A" };
 
-}
-
-
-void Deck::blackjackrules(){
-	for (std::vector<Card>::iterator i = deck.begin(); i != deck.end(); i++){
-		if (i->getfaceVal() > 10 && i->getFace() != "A")
-			i->changeVal(10);
-		if (i->getFace() == "A")
-			i->changeVal(11);
+	deck.reserve(suits.size() * faces.size());
+	for (const auto& suit : suits) {
+		for (std::size_t i = 0; i < faces.size(); ++i) {
+			const int faceValue = static_cast<int>(i) + 2;
+			const bool isFaceCard = faceValue >= 11;
+			deck.push_back(Card(suit, faces[i], faceValue, isFaceCard));
+		}
 	}
 }
 
-Card Deck::getCard(){
-	return deck.back();
-}
-
-void Deck::pop_back(){
+Card Deck::drawCard(){
+	Card card = deck.back();
 	deck.pop_back();
+	return card;
 }
-
-
-
 
 void Deck::showDeck(){
 	for (std::vector<Card>::iterator i = deck.begin(); i != deck.end(); i++)
@@ -100,10 +40,14 @@ void Deck::shuffleDeck(){
 Deck::~Deck(){
 }
 
-void Deck::push_back(Card card){
+void Deck::push_back(const Card& card){
 	deck.push_back(card);
 }
 
-void Deck::size() {
-	std::cout << deck.size() << '\n';
+std::size_t Deck::size() const {
+	return deck.size();
+}
+
+bool Deck::isEmpty() const {
+	return deck.empty();
 }

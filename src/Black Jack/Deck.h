@@ -1,5 +1,6 @@
 #pragma once
 #include "Card.h"
+#include <cstddef>
 #include <vector>
 
 
@@ -11,10 +12,9 @@ public:
 	~Deck();
 	void showDeck();
 	void shuffleDeck();
-	Card getCard();
-	void pop_back();
-	void push_back(Card);
-	void blackjackrules();
-	void size();
+	Card drawCard();
+	void push_back(const Card& card);
+	std::size_t size() const;
+	bool isEmpty() const;
 };
 
