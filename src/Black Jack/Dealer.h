@@ -1,6 +1,4 @@
 #pragma once
-#include "Deck.h"
-#include "Player.h"
 #include "Hand.h"
 
 
@@ -11,8 +9,11 @@ public:
 	Dealer();
 	~Dealer();
 	void showCards(bool hideHoleCard = false); //displays the dealer's current hand
-	void showCard();
+	void showCard() const;
 	void receiveCard(const Card& card);
-	static bool shouldHit() const;
-		
+	int getPoints() const;
+	bool shouldHit() const;
+	void clearHand();
+	const Hand& getHand() const;
+	Hand& getHand();
 };

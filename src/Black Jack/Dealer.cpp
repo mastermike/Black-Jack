@@ -1,6 +1,4 @@
 #include "Dealer.h"
-#include "Deck.h"
-#include "Player.h"
 #include <iostream>
 
 Dealer::Dealer(){
@@ -9,8 +7,10 @@ Dealer::Dealer(){
 Dealer::~Dealer(){
 
 }
-void Dealer::showCard(){
-	hand.begin()->display();
+void Dealer::showCard() const{
+	if (!hand.isEmpty()) {
+		hand.getCards().begin()->display();
+	}
 }
 
 void Dealer::showCards(bool hideHoleCard){
@@ -29,6 +29,22 @@ void Dealer::receiveCard(const Card& card){
 	hand.addCard(card);
 }
 
-static bool shouldHit() const {
-	return hand.getPoints() < 17; // Dealer hits on 16 or less
+int Dealer::getPoints() const{
+	return hand.getPoints();
+}
+
+bool Dealer::shouldHit() const {
+	return hand.getPoints() < 17;
+}
+
+void Dealer::clearHand(){
+	hand.clear();
+}
+
+const Hand& Dealer::getHand() const{
+	return hand;
+}
+
+Hand& Dealer::getHand(){
+	return hand;
 }

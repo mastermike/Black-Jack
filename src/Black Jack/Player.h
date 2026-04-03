@@ -13,16 +13,17 @@ public:
 	Player(std::string, int);
 	Player();
 	~Player();
-	const int& getMoney();
-	const std::string& getName();
+	const int& getMoney() const;
+	const std::string& getName() const;
 	void changeName(); //changes player's name using cin
-	void drawCard(Deck&); //"draws" a card from the "deck"
 	void receiveCard(const Card& card);
 	void showCards(); //displays the player's current hand
-	void placeBet();
-	int getBet();
-	void recieveMoney(int);
-	int getPoints();
+	bool placeBet(int amount);
+	void clearBet();
+	int getBet() const;
+	void recieveMoney(int amount);
+	int getPoints() const;
+	void clearHand();
 	const Hand& getHand() const;
 	Hand& getHand();
 };

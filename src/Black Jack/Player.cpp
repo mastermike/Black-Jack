@@ -7,10 +7,6 @@ Player::Player(std::string Face, int Money){
 	name = Face;
 }
 
-void Player::drawCard(Deck& deck){
-	receiveCard(deck.drawCard());
-}
-
 void Player::receiveCard(const Card& card){
 	hand.addCard(card);
 }
@@ -27,11 +23,11 @@ void Player::changeName(){
 Player::~Player(){
 }
 
-const int& Player::getMoney(){
+const int& Player::getMoney() const{
 	return money;
 }
 
-const std::string& Player::getName(){
+const std::string& Player::getName() const{
 	return name;
 }
 
@@ -43,38 +39,35 @@ void Player::showCards(){
 	}
 }
 
-void Player::placeBet(){
-	while (true){
-		std::cin >> bet;
-		if (std::cin.fail()){
-			std::cin.clear();
-			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-			std::cout << "That's not an integer. Please enter an integer only bet:\n";
-			continue;
-		}
-
-		if ((bet <= 0) || (bet > money))
-		{
-			std::cout << "Error; Unable to process your bet.\nPlease enter your bet: ";
-			continue;
-		}
-
-		money = money - bet;
-		return;
+bool Player::placeBet(int amount){
+	if (amount <= 0 || amount > money)
+	{
+		return false;
 	}
+
+	bet = amount;
+	money -= bet;
+	return true;
 }
 
-int Player::getBet(){
+void Player::clearBet(){
+	bet = 0;
+}
+
+int Player::getBet() const{
 	return bet;	
 }
 
-void Player::recieveMoney(int i){
-	money += 2*i;
+void Player::recieveMoney(int amount){
+	money += amount;
 }
 
-
-int Player::getPoints(){
+int Player::getPoints() const{
 	return hand.getPoints();
+}
+
+void Player::clearHand(){
+	hand.clear();
 }
 
 const Hand& Player::getHand() const{

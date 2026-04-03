@@ -26,3 +26,11 @@ int Hand::getPoints() const {
 const std::list<Card>& Hand::getCards() const {
 	return cards;
 }
+
+std::size_t Hand::size() const {
+	return cards.size();
+}
+
+bool Hand::isEmpty() const {
+	return cards.empty();
+}
