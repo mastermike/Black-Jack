@@ -11,8 +11,15 @@ Deck::Deck(){
 	deck.reserve(suits.size() * faces.size());
 	for (const auto& suit : suits) {
 		for (std::size_t i = 0; i < faces.size(); ++i) {
-			const int faceValue = static_cast<int>(i) + 2;
-			const bool isFaceCard = faceValue >= 11;
+			const bool isAce = faces[i] == "A";
+			const bool isFaceCard = faces[i] == "J" || faces[i] == "Q" || faces[i] == "K" || isAce;
+			int faceValue = static_cast<int>(i) + 2;
+			if (faces[i] == "J" || faces[i] == "Q" || faces[i] == "K") {
+				faceValue = 10;
+			}
+			else if (isAce) {
+				faceValue = 11;
+			}
 			deck.push_back(Card(suit, faces[i], faceValue, isFaceCard));
 		}
 	}

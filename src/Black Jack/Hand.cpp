@@ -11,9 +11,15 @@ int Hand::getPoints() const {
 	int totalPoints = 0;
 	int aceCount = 0;
 	for (const auto& card : cards) {
-		totalPoints += card.getfaceVal();
 		if (card.getFace() == "A") {
+			totalPoints += 11;
 			aceCount++;
+		}
+		else if (card.isaFace()) {
+			totalPoints += 10;
+		}
+		else {
+			totalPoints += card.getfaceVal();
 		}
 	}
 	while (totalPoints > 21 && aceCount > 0) {
